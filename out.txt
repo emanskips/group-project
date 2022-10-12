@@ -1,0 +1,8 @@
+Pushing "Anthony:1" to list
+Pushing "Bob:3" to list
+Pushing "Charles:4" to list
+Pushing "Greg:0" to list
+Pushing "Timmy:2" to list
+Built List: [Timmy:2, Greg:0, Charles:4, Bob:3, Anthony:1]
+List is Sorted
+Built List: [Charles:4, Bob:3, Timmy:2, Anthony:1, Greg:0]

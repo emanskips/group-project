@@ -1,0 +1,20 @@
+push
+5
+part
+Anthony 1
+part
+Bob 3
+part
+Charles 4
+part
+Greg 0
+full
+Timmy 300.2 2
+
+print
+
+sort
+
+print
+
+Quit
