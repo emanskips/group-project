@@ -2,21 +2,24 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 #include <iostream>
-	using namespace std;
+using namespace std;
+
 	class client
 	{
+	private:
+		string firstName;
+		string lastName;
+		int ID;
+		double balance;
+        
 	public:
 		void Initialize(string f, string l, double b, int i);
 		//returns the corrisponding variable
 		string getFullName() const;
 		double getBalance() const;
 		int getID() const;
-
-	private:
-		string firstName;
-		string lastName;
-		int ID;
-		double balance;
+        
+		void setBalance(double b);
 
 	void client::Initialize(string f, string l, double b, int i) {
 		firstName = f;
@@ -36,6 +39,10 @@
 	double client::getBalance() const {
 		return balance;
 	}
+
+    void client::setBalance(double b) {
+        balance = 10;
+    }
 };
 #endif
 	//Mehri, A. (2022). In list Class example, Payload.h. 

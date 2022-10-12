@@ -1,30 +1,30 @@
 #ifndef payloadList_h
 #define payloadList_h
 
-#include "payload.h"
+#include "client.h"
 
 class payloadList{
     public:
     payloadList();
     ~payloadList();
 
-    payload* GetContent();
-    void SetContents(payload* p);
+    client* GetContent();
+    void SetContents(client* p);
 
     payloadList* GetNext();
     void SetNext(payloadList* n);
 
     payloadList* GetHead();
 
-    void push(payload* p);
+    void push(client* p);
     void del(int id);
     void sort();
 
     bool hasNext();
-    payload* search(int id);
+    client* search(int id);
 
     private:
-    payload* ptr;
+    client* ptr;
     payloadList* newElement;
     payloadList* next;
     payloadList* head;
