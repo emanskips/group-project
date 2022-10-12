@@ -13,35 +13,28 @@ using namespace std;
 		double balance;
         
 	public:
-		void Initialize(string f, string l, double b, int i);
-		//returns the corrisponding variable
-		string getFullName() const;
-		double getBalance() const;
-		int getID() const;
-        
-		void setBalance(double b);
 
-	void client::Initialize(string f, string l, double b, int i) {
+	void Initialize(string f, string l, double b, int i) {
 		firstName = f;
 		lastName = l;
 		balance = b;
 		ID = i;
 	}
 	//returns both names and a space between them
-	string client::getFullName() const {
+	string getFullName() const {
 		return firstName + " " + lastName;
 	}
 	
-	int client::getID() const {
+	int getID() const {
 		return ID;
 	}
 
-	double client::getBalance() const {
+	double getBalance() const {
 		return balance;
 	}
 
-    void client::setBalance(double b) {
-        balance = 10;
+    void setBalance(double b) {
+        balance = b;
     }
 };
 #endif

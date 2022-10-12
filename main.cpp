@@ -133,8 +133,10 @@ client* getClient(payloadList l) {
 }
 
 void printAllClients(payloadList l) {
-    client* p = getClient(l);
-    if (p->getID() != -1) printClient(*p);
+    for (payloadList* ptr = l.GetHead(); l.GetNext() != NULL; ptr = ptr->GetNext()){
+        client* p = l.GetContent();
+        printClient(*p);
+    }
 }
 
 void addClient(payloadList &l) {
