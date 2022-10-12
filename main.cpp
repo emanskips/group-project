@@ -107,7 +107,7 @@ void buildMenu() {
          << "2. View Client by ID\n"
          << "3. Update Balance\n"
          << "4. Remove Client\n"
-         << "5. View Client\n"
+         << "5. View All 1Client\n"
          << "6. Exit Program" << endl;
 }
 
@@ -133,10 +133,13 @@ client* getClient(payloadList l) {
 }
 
 void printAllClients(payloadList l) {
-    for (payloadList* ptr = l.GetHead(); l.GetNext() != NULL; ptr = ptr->GetNext()){
-        client* p = l.GetContent();
-        printClient(*p);
+    cout << "\n";
+    for (payloadList* ptr = l.GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
+        cout << "Name: " << ptr->GetContent()->getFullName()
+             << "   ID: " << ptr->GetContent()->getID()
+             << "   Balance: " << ptr->GetContent()->getBalance() << endl;
     }
+    cout << "\n";
 }
 
 void addClient(payloadList &l) {
