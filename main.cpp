@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "payload.cpp"
+#include "client.h"
 #include "payloadList.cpp"
 
 using namespace std;
@@ -29,19 +29,19 @@ void testDriver(){
                 string format;
 
                 //Constructor data
-                string name;
+                string fname, lname;
                 float bal;
                 int id;
 
-                payload* p;
+                client* p = new client();
                 inFile >> format;
                 if (format == "full") {
-                    inFile >> name >> bal >> id;
-                    p = new payload (name, bal, id);
+                    inFile >> fname >> lname >> bal >> id;
+                    p->Initialize(fname, lname, bal, id);
                 }
                 else if (format == "part") {
-                    inFile >> name >> id;
-                    p = new payload (name, id);
+                    inFile >> fname >> id;
+                    p->Initialize(fname, "x", 0, id);
                 }
 
                 if (list.hasNext() && (&list, id)) {
@@ -49,7 +49,7 @@ void testDriver(){
                 }
                 else {
                     list.push(p);
-                    outFile << "Pushing \"" << name << ":" << id << "\" to list" << endl;
+                    outFile << "Pushing \"" << fname << " " << lname << ":" << id << "\" to list" << endl;
                 }
             }
         }
@@ -66,7 +66,7 @@ void testDriver(){
         else if (command == "print") {
             outFile << "Built List: [";
             for (payloadList* ptr = list.GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
-                outFile << ptr->GetContent()->GetName() << ":" << ptr->GetContent()->GetID();
+                outFile << ptr->GetContent()->getFullName() << ":" << ptr->GetContent()->getID();
                 if (ptr->hasNext()) outFile << ", ";
                 //cout << "Pointer: " << ptr->GetContent()->GetName() << ":"
                 //     << ((ptr->GetNext() == NULL) ? "NULL" : ptr->GetNext()->GetContent()->GetName()) << endl;
@@ -111,58 +111,59 @@ void buildMenu() {
          << "6. Exit Program" << endl;
 }
 
-void printClient(payload p) {
-    cout << "Name: " << p.GetName()
-         << "   ID: " << p.GetID()
-         << "   Balance: " << p.GetBal() << endl << endl;
+void printClient(client p) {
+    cout << "Name: " << p.getFullName()
+         << "   ID: " << p.getID()
+         << "   Balance: " << p.getBalance() << endl << endl;
 }
 
 bool clientExists(payloadList l, int id) {
-    payload* p = l.search(id);
-    if (p->GetID() == -1) return false;
+    client* p = l.search(id);
+    if (p->getID() == -1) return false;
     else return true;
 }
 
-payload* getClient(payloadList l) {
+client* getClient(payloadList l) {
     int id;
     cout << "Enter Client's ID: ";
     cin >> id;
-    payload* p = l.search(id);
-    if (p->GetID() == -1) cout << "Client by ID \"" << id << "\" Does Not Exist" << endl;
+    client* p = l.search(id);
+    if (p->getID() == -1) cout << "Client by ID \"" << id << "\" Does Not Exist" << endl;
     return p;
 }
 
 void printAllClients(payloadList l) {
-    payload* p = getClient(l);
-    if (p->GetID() != -1) printClient(*p);
+    client* p = getClient(l);
+    if (p->getID() != -1) printClient(*p);
 }
 
 void addClient(payloadList &l) {
-    string name;
+    string fname, lname;
     float bal;
     int id;
-    cout << "Enter client in name balance id format: ";
-    cin >> name >> bal >> id;
-    payload* p = new payload(name, bal, id);
+    cout << "Enter client in first last balance id format: ";
+    cin >> fname >> lname >> bal >> id;
+    client* p = new client();
+    p->Initialize(fname, lname, bal, id);
     l.push(p);
     cout << "Client Successfully Added\n" << endl;
 }
 
 void findClient(payloadList l) {
-    payload* p = getClient(l);
-    if (p->GetID() != -1) printClient(*p);
+    client* p = getClient(l);
+    if (p->getID() != -1) printClient(*p);
 }
 
 void updateBal(payloadList &l) {
-    payload* p = getClient(l);
-    if (p->GetID() != -1) {
-        float newBal;
+    client* p = getClient(l);
+    if (p->getID() != -1) {
+        double newBal;
         cout << "\nEnter New Balance: ";
         cin >> newBal;
 
-        cout << "Balance updated from $" << p->GetBal();
-        p->SetBal(newBal);
-        cout << "to $" << p->GetBal() << endl;
+        cout << "Balance updated from $" << p->getBalance();
+        p->setBalance(newBal);
+        cout << "to $" << p->getBalance() << endl;
     }
 }
 
