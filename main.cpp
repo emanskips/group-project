@@ -6,7 +6,6 @@
 
 using namespace std;
 
-//Test driver from previous project
 void testDriver(){
     payloadList list;
 
@@ -102,43 +101,38 @@ void testDriver(){
     outFile.close();
 }
 
-//Builds menu, avoids clutter
 void buildMenu() {   
     cout << "~Bank App~\n" 
          << "1. Add a Client\n"
          << "2. View Client by ID\n"
          << "3. Update Balance\n"
          << "4. Remove Client\n"
-         << "5. View All 1Client\n"
+         << "5. View All Client\n"
          << "6. Exit Program" << endl;
 }
 
-//Prints client
 void printClient(client p) {
     cout << "Name: " << p.getFullName()
          << "   ID: " << p.getID()
          << "   Balance: " << p.getBalance() << endl << endl;
 }
 
-//Used when ID is not required, and client only needs to be in list
 bool clientExists(payloadList l, int id) {
     client* p = l.search(id);
     if (p->getID() == -1) return false;
     else return true;
 }
 
-//Used in other functions to avoid overwriting & simplify code
-//Used whenever ID is required to find client
 client* getClient(payloadList l) {
     int id;
     cout << "Enter Client's ID: ";
     cin >> id;
+    //List returns a client with -1 id if they are not found
     client* p = l.search(id);
     if (p->getID() == -1) cout << "Client by ID \"" << id << "\" Does Not Exist" << endl;
     return p;
 }
 
-//Loops through all clients and prints their information
 void printAllClients(payloadList l) {
     cout << "\n";
     for (payloadList* ptr = l.GetHead(); ptr != NULL; ptr = ptr->GetNext()) {
@@ -149,7 +143,6 @@ void printAllClients(payloadList l) {
     cout << "\n";
 }
 
-//Add client
 void addClient(payloadList &l) {
     string fname, lname;
     float bal;
@@ -162,35 +155,29 @@ void addClient(payloadList &l) {
     cout << "Client Successfully Added\n" << endl;
 }
 
-//Find client by id
 void findClient(payloadList l) {
     client* p = getClient(l);
     if (p->getID() != -1) printClient(*p);
 }
 
-//Changes balance of client
 void updateBal(payloadList &l) {
     client* p = getClient(l);
     if (p->getID() != -1) {
         double newBal;
-        cout << "\nEnter New Balance: ";
+        cout << "Enter New Balance: ";
         cin >> newBal;
 
         cout << "Balance updated from $" << p->getBalance();
         p->setBalance(newBal);
-        cout << "to $" << p->getBalance() << endl;
+        cout << " to $" << p->getBalance() << endl << endl;
     }
 }
 
-//Deletes client from list by id
 void removeClient(payloadList& l) {
-    int id;
-    cout << "Enter Client's ID: ";
-    cin >> id;
-    if (!clientExists(l, id)) cout << "Client by ID \"" << id << "\" Does Not Exist" << endl;
-    else {
-        l.del(id);
-        cout << "\nClient Successfully Deleted" << endl;
+    client* p = getClient(l);
+    if (p->getID() != -1) {
+        l.del(p->getID());
+        cout << "Client Successfully Deleted\n" << endl;
     }
 }
 
@@ -198,7 +185,6 @@ int main(int argc, char const *argv[]) {
     payloadList list;
     int option;
     //testDriver();
-    //Read option and run command
     do
     {
         buildMenu();
